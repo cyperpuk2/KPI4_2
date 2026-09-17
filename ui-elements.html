@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Десять базових UI-елементів: опис, властивості та приклади використання.">
+<title>Каталог UI-елементів</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --bg:#F4F6F5;
+    --surface:#FFFFFF;
+    --surface-2:#EFF2F1;
+    --ink:#131819;
+    --ink-2:#333C3E;
+    --muted:#697476;
+    --line:#DFE4E3;
+    --line-2:#CBD3D2;
+    --accent:#0D6A85;
+    --accent-bg:#E3F0F4;
+    --accent-ink:#FFFFFF;
+    --danger:#A6412F;
+    --ok:#1F7A5C;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#101415;
+      --surface:#171C1E;
+      --surface-2:#1E2426;
+      --ink:#E9EDEC;
+      --ink-2:#C4CCCB;
+      --muted:#8C9899;
+      --line:#2A3234;
+      --line-2:#3A4446;
+      --accent:#5EC0DB;
+      --accent-bg:#15303A;
+      --accent-ink:#0B1416;
+      --danger:#E0836E;
+      --ok:#5FC49E;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#101415;
+    --surface:#171C1E;
+    --surface-2:#1E2426;
+    --ink:#E9EDEC;
+    --ink-2:#C4CCCB;
+    --muted:#8C9899;
+    --line:#2A3234;
+    --line-2:#3A4446;
+    --accent:#5EC0DB;
+    --accent-bg:#15303A;
+    --accent-ink:#0B1416;
+    --danger:#E0836E;
+    --ok:#5FC49E;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    font-size:15px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  button,input,select,textarea,optgroup,option,code,kbd,samp,pre{
+    font-family:'Instrument Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  code{
+    font-size:.9em;
+    background:var(--surface-2);
+    border-radius:3px;
+    padding:1px 5px;
+    color:var(--ink-2);
+  }
+
+  .app{
+    max-width:1200px;
+    margin:0 auto;
+    padding-inline:24px;
+    display:grid;
+    grid-template-columns:236px minmax(0,1fr);
+    gap:0 52px;
+    align-items:start;
+  }
+
+  /* ---------- бічна навігація ---------- */
+  .side{
+    position:sticky;
+    top:env(safe-area-inset-top,0px);
+    padding-block:40px 32px;
+    /* запас з боків, щоб рамка фокуса не обрізалась краєм області прокручування */
+    padding-inline:5px;
+    margin-inline:-5px;
+    max-height:100vh;
+    overflow-y:auto;
+  }
+  .brand{
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:.02em;
+    margin:0 0 16px;
+  }
+  .search{
+    width:100%;
+    font:inherit;
+    font-size:13px;
+    color:var(--ink);
+    background:var(--surface);
+    border:1px solid var(--line-2);
+    border-radius:7px;
+    padding:7px 10px;
+    margin-bottom:14px;
+  }
+  .search::placeholder{color:var(--muted)}
+  .search:focus-visible{outline-offset:1px}
+  .navlist{list-style:none;margin:0;padding:0}
+  .navlist a{
+    display:flex;
+    gap:10px;
+    align-items:baseline;
+    text-decoration:none;
+    color:var(--muted);
+    font-size:13.5px;
+    padding:5px 10px;
+    border-radius:6px;
+  }
+  .navlist a .n{
+    font-size:11.5px;
+    opacity:.75;
+    font-variant-numeric:tabular-nums;
+  }
+  .navlist a:hover{color:var(--ink);background:var(--surface-2)}
+  .navlist a.on{
+    color:var(--accent);
+    background:var(--accent-bg);
+    box-shadow:inset 2px 0 0 var(--accent);
+    font-weight:500;
+  }
+  .nav-empty{font-size:12.5px;color:var(--muted);padding:6px 10px}
+
+  /* ---------- контент ---------- */
+  main{padding-block:40px 72px;min-width:0}
+
+  .hero{margin-bottom:30px}
+  h1{
+    font-size:clamp(24px,3.4vw,36px);
+    font-weight:600;
+    letter-spacing:-.022em;
+    line-height:1.15;
+    margin:0;
+  }
+
+  section{
+    border-top:1px solid var(--line);
+    padding-block:38px 38px;
+    scroll-margin-top:24px;
+  }
+  .sec-head{display:flex;align-items:center;gap:11px;flex-wrap:wrap;margin-bottom:12px}
+  .sec-num{
+    font-size:11.5px;
+    font-variant-numeric:tabular-nums;
+    color:var(--accent);
+    border:1px solid var(--accent);
+    border-radius:4px;
+    padding:2px 7px;
+    line-height:1.4;
+    display:inline-flex;
+    align-items:center;
+  }
+  h2{font-size:20px;font-weight:600;letter-spacing:-.015em;margin:0}
+
+  .lede{
+    font-size:16.5px;
+    line-height:1.55;
+    color:var(--ink-2);
+    margin:0 0 14px;
+    max-width:62ch;
+  }
+  .facts{list-style:none;margin:0 0 20px;padding:0;max-width:62ch}
+  .facts li{
+    position:relative;
+    padding-left:18px;
+    margin-bottom:6px;
+    font-size:14.5px;
+    color:var(--ink-2);
+  }
+  .facts li::before{
+    content:"";
+    position:absolute;left:0;top:.62em;
+    width:6px;height:1.5px;background:var(--accent);
+  }
+
+  /* ---------- панель прикладів ---------- */
+  .demos{
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--line);
+  }
+  .demos-head{
+    background:var(--surface-2);
+    padding:8px 14px;
+    font-size:12px;font-weight:500;
+    color:var(--muted);
+    border-bottom:1px solid var(--line);
+  }
+  .demos-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(196px,1fr));
+    gap:1px;
+  }
+  .ex{
+    background:var(--surface);
+    padding:16px;
+    display:flex;flex-direction:column;gap:11px;
+  }
+  .cap{margin:0;font-size:12.5px;font-weight:500;color:var(--ink)}
+  .body{display:flex;flex-direction:column;gap:7px;font-size:14.5px;color:var(--ink-2)}
+  .body label{cursor:pointer;display:flex;align-items:center}
+
+  /* ---------- контроли ---------- */
+  input[type=radio],input[type=checkbox]{
+    accent-color:var(--accent);
+    width:15px;height:15px;
+    margin:0 9px 0 0;flex:none;cursor:pointer;
+  }
+  input[type=text],textarea,select{
+    font:inherit;font-size:14px;
+    color:var(--ink);background:var(--surface-2);
+    border:1px solid var(--line-2);border-radius:6px;
+    padding:8px 10px;width:100%;
+  }
+  textarea{resize:vertical}
+  input::placeholder,textarea::placeholder{color:var(--muted)}
+  input:focus,select:focus,textarea:focus{border-color:var(--accent)}
+  .btn{
+    font:inherit;font-size:14px;font-weight:500;cursor:pointer;
+    border-radius:6px;padding:8px 15px;
+    border:1px solid var(--line-2);
+    background:var(--surface);color:var(--ink);
+    align-self:flex-start;
+  }
+  .btn.fill{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+  .btn.danger{background:var(--danger);border-color:var(--danger);color:#fff}
+  .btn:hover{filter:brightness(1.06)}
+  .btn:active{
+    transform:translateY(1px);
+    filter:brightness(.92);
+    box-shadow:inset 0 2px 4px rgba(0,0,0,.14);
+  }
+  .btn-status{
+    font-size:12.5px;
+    color:var(--accent);
+    min-height:1.2em;
+    opacity:0;
+    transition:opacity .2s ease;
+  }
+  .btn-status.show{opacity:1}
+  a{color:var(--accent)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+  .tabs{display:flex;gap:16px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .tab{
+    font:inherit;font-size:13.5px;background:none;border:none;
+    padding:0 0 7px;cursor:pointer;color:var(--muted);
+    border-bottom:2px solid transparent;margin-bottom:-1px;
+  }
+  .tab:hover{color:var(--ink)}
+  .tab.active{color:var(--accent);border-bottom-color:var(--accent);font-weight:500}
+  .tab-content{padding-top:9px;font-size:13.5px;min-height:38px}
+
+  .tip{position:relative;display:inline-block;align-self:flex-start}
+  .tip-target{
+    font:inherit;font-size:14.5px;color:var(--ink);
+    background:none;border:none;
+    padding:0;cursor:help;
+    transition:color .12s ease;
+  }
+  .tip-target:hover,.tip:focus-within .tip-target{color:var(--accent)}
+
+  .tip-row{display:inline-flex;align-items:center;gap:8px;font-size:14.5px}
+  .hint{
+    margin:0;
+    font-size:12px;
+    color:var(--muted);
+  }
+  .tip-icon{
+    width:18px;height:18px;flex:none;
+    border-radius:50%;
+    border:1px solid var(--accent);
+    background:var(--accent-bg);
+    color:var(--accent);
+    font-size:11.5px;font-weight:600;line-height:1;
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:0;cursor:help;
+    transition:color .12s ease,border-color .12s ease,background .12s ease;
+  }
+  .tip-icon:hover,.tip:focus-within .tip-icon{
+    color:var(--accent-ink);
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  .tip-text{
+    visibility:hidden;opacity:0;transition:opacity .15s;
+    position:absolute;bottom:135%;left:0;z-index:4;
+    width:max-content;max-width:min(215px,60vw);
+    background:var(--ink);color:var(--bg);
+    font-size:12px;line-height:1.4;padding:8px 10px;border-radius:6px;
+  }
+  .tip:hover .tip-text,.tip:focus-within .tip-text{visibility:visible;opacity:1}
+  /* у розділі Tooltip підказка розкривається вниз і має власне місце,
+     щоб не обрізатись краєм панелі з прикладами */
+  #c8 .ex{padding-bottom:64px}
+  #c8 .tip-text{top:calc(100% + 8px);bottom:auto}
+  .tip-text.tip-left{left:auto;right:0}
+
+  .scroll{overflow-x:auto}
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{text-align:left;padding:7px 14px 7px 0;border-bottom:1px solid var(--line)}
+  th{
+    font-weight:500;font-size:12px;
+    color:var(--muted);
+  }
+  tbody tr:last-child td{border-bottom:none}
+  .num{text-align:right;padding-right:0;font-variant-numeric:tabular-nums}
+
+  footer{
+    border-top:1px solid var(--line);
+    padding-top:18px;
+    display:flex;justify-content:flex-end;gap:16px;flex-wrap:wrap;
+    font-size:12.5px;color:var(--muted);
+  }
+  .to-top{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:13px;font-weight:500;
+    color:var(--muted);text-decoration:none;
+    background:var(--surface);
+    border:1px solid var(--line-2);
+    border-radius:999px;
+    padding:7px 15px 7px 12px;
+    transition:color .15s ease,border-color .15s ease,background .15s ease;
+  }
+  .to-top:hover{
+    color:var(--accent);
+    border-color:var(--accent);
+    background:var(--accent-bg);
+  }
+  .to-top svg{
+    width:14px;height:14px;flex:none;
+    transition:transform .15s ease;
+  }
+  .to-top:hover svg{transform:translateY(-2px)}
+  .to-top:active{transform:translateY(1px)}
+
+  @media (max-width:900px){
+    .app{grid-template-columns:1fr;gap:0}
+    .side{
+      position:sticky;top:0;z-index:10;
+      max-height:none;padding-block:14px 12px;
+      background:var(--bg);
+      border-bottom:1px solid var(--line);
+      padding-top:calc(14px + env(safe-area-inset-top,0px));
+    }
+    .brand{display:none}
+    .search{margin-bottom:10px}
+    .navlist{display:flex;gap:6px;overflow-x:auto;padding:4px;margin:-4px}
+    .navlist li{flex:none}
+    .navlist a{
+      border:1px solid var(--line-2);
+      padding:4px 10px;white-space:nowrap;
+    }
+    .navlist a.on{border-color:var(--accent);box-shadow:none}
+    main{padding-block:28px 56px}
+    section{scroll-margin-top:118px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *{transition:none!important}
+    .btn:active{transform:none}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <aside class="side">
+    <p class="brand">Навігаційна панель</p>
+    <input type="search" class="search" id="nav-search" placeholder="Пошук елемента" aria-label="Пошук елемента">
+    <ul class="navlist" id="navlist">
+      <li><a href="#c1" data-name="radiobutton радіокнопка"><span class="n">01</span>Radiobutton</a></li>
+      <li><a href="#c2" data-name="checkbox прапорець"><span class="n">02</span>Checkbox</a></li>
+      <li><a href="#c3" data-name="text input поле введення"><span class="n">03</span>Text input</a></li>
+      <li><a href="#c4" data-name="tabs вкладки"><span class="n">04</span>Tabs</a></li>
+      <li><a href="#c5" data-name="button кнопка"><span class="n">05</span>Button</a></li>
+      <li><a href="#c6" data-name="text label мітка"><span class="n">06</span>Text label</a></li>
+      <li><a href="#c7" data-name="link посилання"><span class="n">07</span>Link</a></li>
+      <li><a href="#c8" data-name="tooltip підказка"><span class="n">08</span>Tooltip</a></li>
+      <li><a href="#c9" data-name="dropdown list випадний список"><span class="n">09</span>Dropdown list</a></li>
+      <li><a href="#c10" data-name="data grid таблиця даних"><span class="n">10</span>Data grid</a></li>
+    </ul>
+    <p class="nav-empty" id="nav-empty" hidden>Нічого не знайдено</p>
+  </aside>
+
+  <main>
+
+    <div class="hero">
+      <h1>UI-елементи: опис та приклади</h1>
+    </div>
+
+    <!-- 1 -->
+    <section id="c1">
+      <div class="sec-head"><span class="sec-num">01</span><h2>Radiobutton</h2></div>
+      <p class="lede">Радіокнопки дозволяють користувачу обрати один варіант із набору. Одночасно може бути обраний лише один.</p>
+      <ul class="facts">
+        <li>Використовуються для взаємовиключних варіантів (наприклад, вибір статі).</li>
+        <li>Групуються разом візуально та функціонально.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <p class="cap">Спосіб доставки:</p>
+            <div class="body">
+              <label><input type="radio" name="deliv1">Кур’єр</label>
+              <label><input type="radio" name="deliv1">Самовивіз</label>
+              <label><input type="radio" name="deliv1">Поштомат</label>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap">Періодичність підписки:</p>
+            <div class="body">
+              <label><input type="radio" name="sub1">Щомісяця</label>
+              <label><input type="radio" name="sub1">Щокварталу</label>
+              <label><input type="radio" name="sub1">Раз на рік</label>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap">Клас квитка:</p>
+            <div class="body">
+              <label><input type="radio" name="fare1">Економ</label>
+              <label><input type="radio" name="fare1">Комфорт</label>
+              <label><input type="radio" name="fare1">Бізнес</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section id="c2">
+      <div class="sec-head"><span class="sec-num">02</span><h2>Checkbox</h2></div>
+      <p class="lede">Чекбокси дозволяють користувачу обрати один або кілька варіантів незалежно один від одного.</p>
+      <ul class="facts">
+        <li>Використовуються для множинного вибору (наприклад, інтереси, налаштування).</li>
+        <li>Кожен чекбокс працює незалежно.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <p class="cap">Канали сповіщень:</p>
+            <div class="body">
+              <label><input type="checkbox">Електронна пошта</label>
+              <label><input type="checkbox">SMS</label>
+              <label><input type="checkbox">Push-сповіщення</label>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap">Зручності готелю:</p>
+            <div class="body">
+              <label><input type="checkbox">Wi-Fi</label>
+              <label><input type="checkbox">Сніданок</label>
+              <label><input type="checkbox">Паркування</label>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap">Дні занять:</p>
+            <div class="body">
+              <label><input type="checkbox">Понеділок</label>
+              <label><input type="checkbox">Середа</label>
+              <label><input type="checkbox">П’ятниця</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section id="c3">
+      <div class="sec-head"><span class="sec-num">03</span><h2>Text input</h2></div>
+      <p class="lede">Поля введення тексту дозволяють користувачу вводити та редагувати текстові дані.</p>
+      <ul class="facts">
+        <li>Використовуються у формах, рядках пошуку, коментарях тощо.</li>
+        <li>Можуть бути однорядковими або багаторядковими (<code>textarea</code>).</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <p class="cap"><label for="company1">Назва компанії:</label></p>
+            <div class="body"><input type="text" id="company1" placeholder="Наприклад, ТОВ «Орбіта»"></div>
+          </div>
+          <div class="ex">
+            <p class="cap"><label for="promo1">Промокод:</label></p>
+            <div class="body"><input type="text" id="promo1" placeholder="Введіть промокод"></div>
+          </div>
+          <div class="ex">
+            <p class="cap"><label for="task1">Опис задачі:</label></p>
+            <div class="body"><textarea id="task1" rows="3" placeholder="Що потрібно зробити..."></textarea></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section id="c4">
+      <div class="sec-head"><span class="sec-num">04</span><h2>Tabs</h2></div>
+      <p class="lede">Вкладки організовують вміст в окремі подання, доступні через клік по заголовках вкладок.</p>
+      <ul class="facts">
+        <li>Використовуються для навігації між пов'язаними розділами (наприклад, профіль / налаштування).</li>
+        <li>Покращують зручність, зменшуючи перевантаження інтерфейсу.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <div class="body">
+              <div class="tabs">
+                <button class="tab active" data-text="Ноутбук, 1 шт. — 24 900 грн.">Склад</button>
+                <button class="tab" data-text="Нова пошта, відділення №12, 19 вересня.">Доставка</button>
+              </div>
+              <div class="tab-content">Ноутбук, 1 шт. — 24 900 грн.</div>
+            </div>
+          </div>
+          <div class="ex">
+            <div class="body">
+              <div class="tabs">
+                <button class="tab active" data-text="12 занять: основи тестування, документація, інструменти.">Програма</button>
+                <button class="tab" data-text="Троє практиків із досвідом від 6 років.">Викладачі</button>
+                <button class="tab" data-text="48 відгуків, середня оцінка 4.8.">Відгуки</button>
+              </div>
+              <div class="tab-content">12 занять: основи тестування, документація, інструменти.</div>
+            </div>
+          </div>
+          <div class="ex">
+            <div class="body">
+              <div class="tabs">
+                <button class="tab active" data-text="Кількість дефектів за спринт: 12, 9, 7.">Графік</button>
+                <button class="tab" data-text="Ті самі дані у вигляді переліку записів.">Таблиця</button>
+              </div>
+              <div class="tab-content">Кількість дефектів за спринт: 12, 9, 7.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 -->
+    <section id="c5">
+      <div class="sec-head"><span class="sec-num">05</span><h2>Button</h2></div>
+      <p class="lede">Кнопки запускають дії при натисканні (наприклад, відправити, зберегти, видалити).</p>
+      <ul class="facts">
+        <li>Можуть мати різні стилі для акценту (основна, другорядна, небезпечна).</li>
+        <li>Використовуються для відправлення форм, навігації тощо.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <button class="btn fill" data-done="Замовлення оформлено">Оформити замовлення</button>
+            <span class="btn-status" aria-live="polite"></span>
+          </div>
+          <div class="ex">
+            <button class="btn" data-done="Товар додано до кошика">Додати в кошик</button>
+            <span class="btn-status" aria-live="polite"></span>
+          </div>
+          <div class="ex">
+            <button class="btn danger" data-done="Підписку скасовано">Скасувати підписку</button>
+            <span class="btn-status" aria-live="polite"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="c6">
+      <div class="sec-head"><span class="sec-num">06</span><h2>Text label</h2></div>
+      <p class="lede">Текстові мітки надають інформацію або описують інші елементи інтерфейсу.</p>
+      <ul class="facts">
+        <li>Використовуються для назв полів, інструкцій або повідомлень про стан.</li>
+        <li>Покращують доступність і зрозумілість інтерфейсу.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <div class="body"><label for="phone1">Номер телефону:</label></div>
+          </div>
+          <div class="ex">
+            <div class="body"><span style="color:var(--danger)">Залишилося 3 дні пробного періоду</span></div>
+          </div>
+          <div class="ex">
+            <div class="body"><span style="color:var(--ok)">Зміни застосовано о 14:32</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="c7">
+      <div class="sec-head"><span class="sec-num">07</span><h2>Link</h2></div>
+      <p class="lede">Посилання переводять користувача на інші сторінки або ресурси.</p>
+      <ul class="facts">
+        <li>Зазвичай підкреслені та виділені кольором для помітності.</li>
+        <li>Можуть відкриватися в тій самій або в новій вкладці.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <div class="body"><a href="https://developer.mozilla.org" target="_blank" rel="noopener noreferrer">MDN Web Docs</a></div>
+          </div>
+          <div class="ex">
+            <div class="body"><a href="https://fonts.google.com" target="_blank" rel="noopener noreferrer">Google Fonts</a></div>
+          </div>
+          <div class="ex">
+            <div class="body"><a href="#c8">Перейти до розділу Tooltip</a></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section id="c8">
+      <div class="sec-head"><span class="sec-num">08</span><h2>Tooltip</h2></div>
+      <p class="lede">Підказки показують додаткову інформацію при наведенні на елемент.</p>
+      <ul class="facts">
+        <li>Використовуються для підказок, пояснень або додаткових деталей.</li>
+        <li>Покращують досвід користувача, не перевантажуючи інтерфейс.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <p class="cap">Пояснення терміна</p>
+            <div class="body">
+              <span class="tip"><button class="tip-target">Термін придатності</button><span class="tip-text" role="tooltip">Дата, до якої виробник гарантує якість товару.</span></span>
+            </div>
+            <p class="hint">Наведіть курсор на напис, щоб побачити пояснення</p>
+          </div>
+          <div class="ex">
+            <p class="cap">Розшифровка скорочення</p>
+            <div class="body">
+              <span class="tip"><button class="tip-target">SLA</button><span class="tip-text" role="tooltip">Погоджений час реакції підтримки — до 4 годин у робочі дні.</span></span>
+            </div>
+            <p class="hint">Наведіть курсор на скорочення, щоб побачити розшифровку</p>
+          </div>
+          <div class="ex">
+            <p class="cap">Значок підказки</p>
+            <div class="body">
+              <span class="tip-row">Експорт даних<span class="tip"><button class="tip-icon" aria-label="Пояснення до пункту «Експорт даних»">i</button><span class="tip-text tip-left" role="tooltip">Вивантажити поточний перелік у файл формату CSV.</span></span></span>
+            </div>
+            <p class="hint">Наведіть курсор на значок «i» поруч із написом</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section id="c9">
+      <div class="sec-head"><span class="sec-num">09</span><h2>Dropdown list</h2></div>
+      <p class="lede">Випадні списки дозволяють користувачу обрати один варіант зі згортаного переліку.</p>
+      <ul class="facts">
+        <li>Використовуються для вибору країни, налаштувань, фільтрів тощо.</li>
+        <li>Можуть підтримувати одиничний або множинний вибір.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <p class="cap"><label for="cur1">Валюта:</label></p>
+            <div class="body">
+              <select id="cur1">
+                <option>Гривня</option>
+                <option>Долар США</option>
+                <option>Євро</option>
+              </select>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap"><label for="size1">Розмір:</label></p>
+            <div class="body">
+              <select id="size1">
+                <option>S</option>
+                <option selected>M</option>
+                <option>L</option>
+                <option>XL</option>
+              </select>
+            </div>
+          </div>
+          <div class="ex">
+            <p class="cap"><label for="tz1">Часовий пояс:</label></p>
+            <div class="body">
+              <select id="tz1">
+                <option>UTC+2</option>
+                <option>UTC+3</option>
+                <option>UTC+1</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 -->
+    <section id="c10">
+      <div class="sec-head"><span class="sec-num">10</span><h2>Data grid</h2></div>
+      <p class="lede">Таблиці даних відображають табличні дані з можливостями сортування, фільтрації та редагування.</p>
+      <ul class="facts">
+        <li>Використовуються для електронних таблиць, адміністративних панелей, звітів.</li>
+        <li>Підтримують посторінкове виведення, пошук та редагування в комірці.</li>
+      </ul>
+      <div class="demos">
+        <div class="demos-head">Приклади</div>
+        <div class="demos-grid">
+          <div class="ex">
+            <div class="scroll">
+              <table>
+                <thead><tr><th>Посада</th><th class="num">Стаж, років</th></tr></thead>
+                <tbody>
+                  <tr><td>Аналітик</td><td class="num">4</td></tr>
+                  <tr><td>Тестувальник</td><td class="num">2</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="ex">
+            <div class="scroll">
+              <table>
+                <thead><tr><th>Замовлення</th><th class="num">Сума, грн</th></tr></thead>
+                <tbody>
+                  <tr><td>ORD-204</td><td class="num">1 850</td></tr>
+                  <tr><td>ORD-207</td><td class="num">640</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="ex">
+            <div class="scroll">
+              <table>
+                <thead><tr><th>Рейс</th><th>Виліт</th></tr></thead>
+                <tbody>
+                  <tr><td>PS-142</td><td>08:30</td></tr>
+                  <tr><td>PS-318</td><td>17:05</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <a class="to-top" href="#c1">
+        <svg viewBox="0 0 16 16" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 13.2V3.2"/><path d="M3.6 7.6 8 3.2l4.4 4.4"/></svg>
+        Нагору
+      </a>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+(function(){
+  /* --- навігація: підсвітка активного розділу --- */
+  var links = [].slice.call(document.querySelectorAll('#navlist a'));
+  var map = {};
+  links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  var sections = [].slice.call(document.querySelectorAll('main section[id]'));
+
+  var LINE = 150;          // лінія активації під верхом вікна
+  var lockUntil = 0;       // пауза для стеження під час плавного прокручування
+  var ticking = false;
+
+  function setActive(id){
+    links.forEach(function(a){ a.classList.toggle('on', a === map[id]); });
+  }
+
+  function currentId(){
+    var shown = sections.filter(function(s){ return !s.hidden; });
+    if (!shown.length) return null;
+    var atBottom = window.innerHeight + window.pageYOffset >=
+                   document.documentElement.scrollHeight - 2;
+    if (atBottom) return shown[shown.length - 1].id;
+    var cur = shown[0].id;
+    shown.forEach(function(s){
+      if (s.getBoundingClientRect().top <= LINE) cur = s.id;
+    });
+    return cur;
+  }
+
+  function sync(){
+    if (Date.now() < lockUntil) return;
+    var id = currentId();
+    if (id) setActive(id);
+  }
+
+  window.addEventListener('scroll', function(){
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function(){ ticking = false; sync(); });
+  }, { passive: true });
+  window.addEventListener('resize', sync);
+
+  // клік по пункту меню підсвічує його одразу
+  links.forEach(function(a){
+    a.addEventListener('click', function(){
+      lockUntil = Date.now() + 900;
+      setActive(a.getAttribute('href').slice(1));
+    });
+  });
+
+  sync();
+
+  /* --- пошук по елементах --- */
+  var search = document.getElementById('nav-search');
+  var empty = document.getElementById('nav-empty');
+  search.addEventListener('input', function(){
+    var q = search.value.trim().toLowerCase();
+    var found = 0;
+    links.forEach(function(a){
+      var hit = !q || (a.dataset.name + ' ' + a.textContent).toLowerCase().indexOf(q) > -1;
+      a.parentElement.hidden = !hit;
+      var sec = document.getElementById(a.getAttribute('href').slice(1));
+      if (sec) sec.hidden = !hit;
+      if (hit) found++;
+    });
+    empty.hidden = found > 0;
+    sync();
+  });
+
+  /* --- кнопки: підтвердження дії --- */
+  document.querySelectorAll('.btn[data-done]').forEach(function(btn){
+    var status = btn.parentElement.querySelector('.btn-status');
+    var timer;
+    btn.addEventListener('click', function(){
+      status.textContent = btn.dataset.done;
+      status.classList.add('show');
+      clearTimeout(timer);
+      timer = setTimeout(function(){ status.classList.remove('show'); }, 2200);
+    });
+  });
+
+  /* --- вкладки --- */
+  document.querySelectorAll('.tabs').forEach(function(group){
+    var tabs = [].slice.call(group.querySelectorAll('.tab'));
+    var content = group.parentElement.querySelector('.tab-content');
+    function activate(tab){
+      tabs.forEach(function(t){ t.classList.remove('active'); });
+      tab.classList.add('active');
+      content.textContent = tab.dataset.text;
+    }
+    tabs.forEach(function(tab, i){
+      tab.addEventListener('click', function(){ activate(tab); });
+      tab.addEventListener('keydown', function(e){
+        var d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!d) return;
+        e.preventDefault();
+        var next = tabs[(i + d + tabs.length) % tabs.length];
+        activate(next); next.focus();
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>
